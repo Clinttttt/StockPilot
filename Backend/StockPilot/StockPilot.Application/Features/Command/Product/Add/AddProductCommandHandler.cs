@@ -10,7 +10,7 @@ using static StockPilot.Domain.Entities.Enums;
 
 namespace StockPilot.Application.Features.Command.Product.AddProduct.cs
 {
-    public class AddProductCommandHandler(IAppDbContext context, IUnitOfWork unitOfWork, ICurrentUserService currentUser) : IRequestHandler<AddProductCommand, Result>
+    public class AddProductCommandHandler(IAppDbContext context,ICurrentUserService currentUser) : IRequestHandler<AddProductCommand, Result>
     {
         public async Task<Result> Handle(AddProductCommand request, CancellationToken cancellationToken)
         {
@@ -26,7 +26,7 @@ namespace StockPilot.Application.Features.Command.Product.AddProduct.cs
                 ,request.Unit,request.CategoryId);
 
             await context.products.AddAsync(entity);
-            await unitOfWork.SaveChangesAsync(cancellationToken);
+            await context.SaveChangesAsync(cancellationToken);
 
             return Result<bool>.Success(true);
         }

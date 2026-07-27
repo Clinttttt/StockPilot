@@ -3,4 +3,5 @@
   <Project Path="StockPilot.Application/StockPilot.Application.csproj" Id="f68f15ad-e66e-464b-b66e-9edc1c81b677" />
   <Project Path="StockPilot.Domain/StockPilot.Domain.csproj" Id="afcd155a-583f-4ff2-b31e-e10dd9d47c5a" />
   <Project Path="StockPilot.Infrastructure/StockPilot.Infrastructure.csproj" Id="843a9ece-f533-4aca-b58e-b35df4cd858b" />
+  <Project Path="StockPilot.Test/StockPilot.Test.csproj" Id="83f9e16c-ac2f-4888-a605-ea38747d1efd" />
 </Solution>

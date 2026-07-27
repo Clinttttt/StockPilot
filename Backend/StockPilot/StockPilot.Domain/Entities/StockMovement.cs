@@ -40,7 +40,9 @@ namespace StockPilot.Domain.Entities
                 Reason = Reason,
                 Remarks = Remarks,
                 PurchaseOrderId = PurchaseOrderId != Guid.Empty ? PurchaseOrderId : Guid.Empty,
-                ReferenceNo = GenerateRefNo()
+                ReferenceNo = GenerateRefNo(),
+                MovementDate = DateTime.UtcNow
+
             };
         }
 
