@@ -22,7 +22,7 @@ namespace StockPilot.Infrastructure.Data
         public DbSet<Product> products => Set<Product>();
         public DbSet<PurchaseOrder> purchaseOrders => Set<PurchaseOrder>();
         public DbSet<PurchaseOrderItem> purchaseOrderItems => Set<PurchaseOrderItem>();
-        public DbSet<StockMovement> stocks => Set<StockMovement>();
+        public DbSet<StockMovement> stocksMovements => Set<StockMovement>();
 
         public Task<IDbContextTransaction> BeginTransactionAsync(CancellationToken cancellationToken = default)
         {

@@ -18,7 +18,7 @@ namespace StockPilot.Application.Common.Interfaces.Data
         DbSet<Product> products { get; }
         DbSet<PurchaseOrder> purchaseOrders { get; }
         DbSet<PurchaseOrderItem> purchaseOrderItems { get; }
-        DbSet<StockMovement> stocks { get; }
+        DbSet<StockMovement> stocksMovements { get; }
         DatabaseFacade Database { get; }
 
         Task<IDbContextTransaction> BeginTransactionAsync(

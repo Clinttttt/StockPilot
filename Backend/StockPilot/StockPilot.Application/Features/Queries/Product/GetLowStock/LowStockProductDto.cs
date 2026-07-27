@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace StockPilot.Application.Features.Queries.Product.GetLowStock.LowStockProductDto
+namespace StockPilot.Application.Features.Queries.Product.GetLowStock
 {
     public sealed record LowStockProductDto(
      Guid ProductId,
      string ProductName,
      string Sku,
-     string CategoryName,
+     string? CategoryName,
      string Unit,
-     int CurrentStock,
-     int MinimumStock,
+     int? CurrentStock,
+     int? MinimumStock,
      int ReorderQuantity,
-     int ShortageQuantity,
+     int? ShortageQuantity,
      LowStockLevel Level
  );
     public enum LowStockLevel
