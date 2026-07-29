@@ -47,10 +47,29 @@ namespace StockPilot.Application.Features.Command.Product.AdjustStock
                    request.Remarks
                    );
 
-            context.stocksMovements.Add(stockMovement);
+            context.stocks.Add(stockMovement);
             await context.SaveChangesAsync(cancellationToken);
             return Result.Success();
 
         }
     }
 }
+/*public sealed record LowStockProductDto(
+ Guid ProductId,
+ string ProductName,
+ string Sku,
+ string CategoryName,
+ string Unit,
+ int CurrentStock,
+ int MinimumStock,
+ int ReorderQuantity,
+ int ShortageQuantity,
+ LowStockLevel Level
+);
+public enum LowStockLevel
+{
+    OutOfStock = 1,
+    Critical = 2,
+    LowStock = 3
+}*/
+

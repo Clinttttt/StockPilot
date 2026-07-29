@@ -1,4 +1,5 @@
 ﻿using StockPilot.Application.Dtos;
+using StockPilot.Domain.Common;
 using StockPilot.Domain.Entities.Users;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,9 @@ namespace StockPilot.Application.Common.Interfaces.Services
 {
     public interface ITokenServices
     {
-        Task<TokenResponseDto> CreateTokenResponse(BaseUser user);
+        Task<TokenResponseDto> CreateTokenResponse(BaseUser user, CancellationToken cancellationToken); Task<TokenResponseDto> CreateTokenResponse(BaseUser user);
+        Task<Result> RevokeRefreshtoken(string refreshToken, CancellationToken cancellationToken = default);
+        Task<Result<BaseUser>> ValidateRefreshToken(string refreshToken, CancellationToken cancellationToken = default);
 
     }
 }

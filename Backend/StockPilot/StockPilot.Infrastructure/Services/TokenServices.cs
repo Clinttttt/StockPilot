@@ -4,10 +4,12 @@ using Microsoft.IdentityModel.Tokens;
 using StockPilot.Application.Common;
 using StockPilot.Application.Common.Interfaces.Services;
 using StockPilot.Application.Dtos;
+using StockPilot.Domain.Common;
 using StockPilot.Domain.Entities.Users;
 using StockPilot.Infrastructure.Data;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.IdentityModel.Tokens.Jwt;
 using System.Runtime.CompilerServices;
 using System.Security.Claims;
@@ -48,31 +50,52 @@ namespace StockPilot.Infrastructure.Services
             rng.GetBytes(random);
             return Convert.ToBase64String(random);
         }
-        public async Task<string> GenerateAndSaveRefreshToken(BaseUser user)
+        public async Task<string> GenerateAndSaveRefreshToken(BaseUser user,CancellationToken cancellationToken = default)
         {
             var refreshtoken = GenerateRandomNumber();
             user.RefreshToken = refreshtoken;
-            await context.SaveChangesAsync();
+            await context.SaveChangesAsync(cancellationToken);
             return refreshtoken;
         }
-        public async Task<bool> ValidateRefreshToken(BaseUser user, string refreshToken)
+        public async Task<Result<BaseUser>> ValidateRefreshToken(string refreshToken, CancellationToken cancellationToken = default)
         {
-            var findUser = await context.baseUsers.FirstOrDefaultAsync(s => s.RefreshToken == refreshToken);
-            if (findUser is null || user.RefreshTokenExpiryTime < DateTime.Now)
+            var hashedRefreshToken = Hasher(refreshToken);
+            var findUser = await context.baseUsers.FirstOrDefaultAsync(s => s.RefreshToken == hashedRefreshToken, cancellationToken);
+            if (findUser is null || findUser.RefreshTokenExpiryTime < DateTime.Now)
             {
-                return false;
+                return Result<BaseUser>.Unauthorized();
             }
-            return true;
+            return Result<BaseUser>.Success(findUser);
         }
- 
-        public async Task<TokenResponseDto> CreateTokenResponse(BaseUser user)
+
+        public async Task<TokenResponseDto> CreateTokenResponse(BaseUser user,CancellationToken cancellationToken)
         {
             return new TokenResponseDto
             {
                 AccessToken = CreateToken(user),
-                RefreshToken = await GenerateAndSaveRefreshToken(user)
+                RefreshToken = await GenerateAndSaveRefreshToken(user, cancellationToken)
             };
         }
+        public async Task<Result> RevokeRefreshtoken(string refreshToken, CancellationToken cancellationToken = default)
+        {
+            if (string.IsNullOrWhiteSpace(refreshToken))
+            {
+                return Result.Failure("Refreshtoken is empty");
+            }
+            var hash = Hasher(refreshToken);
+            var user = await context.baseUsers.FirstOrDefaultAsync(s => s.RefreshToken == hash);
+
+            if (user is null)
+            {
+                return Result.NotFound("User not found");
+            }
+
+            user.ClearRefreshtoken();
+            await context.SaveChangesAsync(cancellationToken);
+            return Result.Success();
+        }
+        public static string Hasher(string token)
+         => Convert.ToBase64String(SHA256.HashData(Encoding.UTF8.GetBytes(token)));
     }
 
 }
