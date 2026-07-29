@@ -38,7 +38,12 @@ namespace StockPilot.Domain.Entities.Users
             };
         }
 
-          
+        public void ClearRefreshtoken()
+        {
+            RefreshToken = null;
+            RefreshTokenExpiryTime = null;
+        }
+
         public void FieldAttempts()
         {
             FailedAttempts++;

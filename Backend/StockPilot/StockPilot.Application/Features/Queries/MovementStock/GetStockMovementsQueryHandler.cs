@@ -8,11 +8,11 @@ using System.Text;
 
 namespace StockPilot.Application.Features.Queries.MovementStock
 {
-    internal class GetStockMovementsQueryHandler(IAppDbContext context) : IRequestHandler<GetStockMovementsQuery, Result<IReadOnlyList<StockMovementsDto>>>
+    public class GetStockMovementsQueryHandler(IAppDbContext context) : IRequestHandler<GetStockMovementsQuery, Result<IReadOnlyList<StockMovementsDto>>>
     {
         public async Task<Result<IReadOnlyList<StockMovementsDto>>> Handle(GetStockMovementsQuery request, CancellationToken cancellationToken)
         {
-            var stockMovements = context.stocksMovements
+            var stockMovements = context.stocks
                 .AsNoTracking()
                 .Where(s => s.ProductId == request.ProductId);
 

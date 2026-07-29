@@ -66,6 +66,8 @@ namespace StockPilot.Domain.Common
         public static new Result<T> Unauthorized(string errorMessage)
             => new(401, false, errorMessage);
 
+        public static Result<T> Unauthorized() 
+            => new(401, false, null);
         public static new Result<T> Forbidden(string errorMessage)
             => new(403, false, errorMessage);
 
