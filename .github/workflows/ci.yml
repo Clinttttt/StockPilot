@@ -1,0 +1,31 @@
+name: Backend CI
+
+on:
+  pull_request:
+    branches:
+      - master
+
+  push:
+    branches:
+      - master
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  backend:
+    name: Verify backend
+
+    uses: Clinttttt/github-actions-templates/.github/workflows/reusable-dotnet-ci.yml@v1
+
+    with:
+      dotnet_versions: |
+        10.0.x
+
+      working_directory: Backend/StockPilot
+      solution_or_project: StockPilot.slnx
+      test_project: ""
+      configuration: Release
+      artifact_retention_days: 14
