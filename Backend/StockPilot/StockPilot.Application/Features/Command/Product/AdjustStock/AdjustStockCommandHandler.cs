@@ -47,7 +47,7 @@ namespace StockPilot.Application.Features.Command.Product.AdjustStock
                    request.Remarks
                    );
 
-            context.stocks.Add(stockMovement);
+            context.stocksMovements.Add(stockMovement);
             await context.SaveChangesAsync(cancellationToken);
             return Result.Success();
 

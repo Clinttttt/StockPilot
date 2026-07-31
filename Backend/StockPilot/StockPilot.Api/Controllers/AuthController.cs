@@ -48,6 +48,7 @@ namespace StockPilot.Api.Controllers
 
             var refreshTokens = CookieExtension.GetRefreshTokenFromCookie(Request);      
             var result = await Sender.Send(new LogoutCommand(refreshToken: refreshTokens.Value));
+            await CookieExtension.ClearCookies(Response);
             return HandleResponse(result);
         }
 
