@@ -12,7 +12,7 @@ namespace StockPilot.Application.Features.Queries.MovementStock
     {
         public async Task<Result<IReadOnlyList<StockMovementsDto>>> Handle(GetStockMovementsQuery request, CancellationToken cancellationToken)
         {
-            var stockMovements = context.stocks
+            var stockMovements = context.stocksMovements
                 .AsNoTracking()
                 .Where(s => s.ProductId == request.ProductId);
 

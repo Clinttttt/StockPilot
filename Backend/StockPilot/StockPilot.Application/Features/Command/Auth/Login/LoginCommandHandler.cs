@@ -16,16 +16,16 @@ namespace StockPilot.Application.Features.Command.Auth.Login
     {
         public async Task<Result<TokenResponseDto>> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
-            var user = await context.baseUsers.FirstOrDefaultAsync(s=> s.UserName  == request.UserName);
+            var user = await context.baseUsers.FirstOrDefaultAsync(s=> s.UserName == request.UserName);
             if (user is null) return Result<TokenResponseDto>.NotFound("User not found");
 
-            if(new PasswordHasher<BaseUser>().VerifyHashedPassword(user, user.PasswordHash!, request.PasswordHash!) == PasswordVerificationResult.Failed)
+            if(new PasswordHasher<BaseUser>().VerifyHashedPassword(user, user.PasswordHash!, request.Password!) == PasswordVerificationResult.Failed)
             {
                 user.FieldAttempts();
                 await context.SaveChangesAsync(cancellationToken);
                 return Result<TokenResponseDto>.Unauthorized("Invalid password");
             }
-            return Result<TokenResponseDto>.Success(await tokenServices.CreateTokenResponse(user));
+            return Result<TokenResponseDto>.Success(await tokenServices.CreateTokenResponse(user,cancellationToken));
 
         }
     }

@@ -18,7 +18,8 @@ namespace StockPilot.Api.Extension
                         HttpOnly = true,
                         Secure = true,
                         SameSite = SameSiteMode.Lax,
-                        Expires = DateTimeOffset.UtcNow.AddMinutes(30)
+                        Expires = DateTimeOffset.UtcNow.AddMinutes(30),
+                        Path = "/"
                     });
                 response.Cookies.Append(
                     RefreshTokenCookie,
@@ -28,7 +29,8 @@ namespace StockPilot.Api.Extension
                         HttpOnly = true,
                         Secure = true,
                         SameSite = SameSiteMode.Lax,
-                        Expires = DateTimeOffset.UtcNow.AddMinutes(30)
+                        Expires = DateTimeOffset.UtcNow.AddMinutes(30),
+                        Path = "/"
                     });
             }
         }

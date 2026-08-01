@@ -9,7 +9,7 @@ namespace StockPilot.Application.Common.Interfaces.Services
 {
     public interface ITokenServices
     {
-        Task<TokenResponseDto> CreateTokenResponse(BaseUser user, CancellationToken cancellationToken); Task<TokenResponseDto> CreateTokenResponse(BaseUser user);
+        Task<TokenResponseDto> CreateTokenResponse(BaseUser user, CancellationToken cancellationToken = default);
         Task<Result> RevokeRefreshtoken(string refreshToken, CancellationToken cancellationToken = default);
         Task<Result<BaseUser>> ValidateRefreshToken(string refreshToken, CancellationToken cancellationToken = default);
 

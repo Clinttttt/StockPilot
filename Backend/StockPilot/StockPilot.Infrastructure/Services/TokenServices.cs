@@ -68,7 +68,7 @@ namespace StockPilot.Infrastructure.Services
             return Result<BaseUser>.Success(findUser);
         }
 
-        public async Task<TokenResponseDto> CreateTokenResponse(BaseUser user,CancellationToken cancellationToken)
+        public async Task<TokenResponseDto> CreateTokenResponse(BaseUser user,CancellationToken cancellationToken = default)
         {
             return new TokenResponseDto
             {
